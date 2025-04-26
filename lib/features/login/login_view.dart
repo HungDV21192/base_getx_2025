@@ -21,7 +21,7 @@ class LoginView extends StatelessWidget {
             child: Text('Login'),
           ),
           TextButton(
-            onPressed: () => Get.toNamed(AppRoutes.register),
+            onPressed: () {},
             child: Text("Don't have an account? Register"),
           )
         ],

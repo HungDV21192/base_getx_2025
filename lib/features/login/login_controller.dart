@@ -13,7 +13,7 @@ class LoginController extends GetxController {
     isLoading.value = false;
 
     if (success) {
-      Get.offAllNamed(AppRoutes.home);
+      // Get.offAllNamed(AppRoutes.home);
     } else {
       Get.snackbar('Error', 'Login failed');
     }

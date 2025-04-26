@@ -11,11 +11,61 @@ dependencies:
   cupertino_icons: ^1.0.6
   #state:
   get: ^4.7.2
-  get_storage: ^2.1.1
+  #network
+  dio: ^5.3.2
+  pretty_dio_logger: ^1.4.0
   #storage:
   flutter_secure_storage: ^9.2.4
+  get_storage: ^2.1.1
   #font
   google_fonts: ^6.1.0
+  #notify
+  another_flushbar: ^1.12.30
+  #splash
+  flutter_native_splash: ^2.4.0
+  #language
+  easy_localization: ^3.0.7+1
+  #router
+  go_router: ^15.0.0
+  #init
+  intl: ^0.19.0
+  # permission
+  permission_handler: ^11.0.0
+  #image
+#  cached_network_image: ^3.4.1
+#  connectivity_plus: ^6.0.3
+  flutter_svg: ^2.1.0
+  image_picker: ^1.0.4
+  #Loading
+  flutter_easyloading: ^3.0.5
+  loading_animation_widget: ^1.3.0
+  # Info app
+  package_info_plus: ^8.0.0
+  #firebase
+  #  firebase_crashlytics: ^4.0.1
+  #  firebase_core: ^3.1.0
+  #  firebase_storage: ^12.0.1
+  #  firebase_messaging: ^15.0.1
+  #  firebase_analytics: ^11.0.1
+  #  firebase_performance: ^0.10.0+1
+  #hash:
+  crypto: ^3.0.6
+  #flavor:
+  flutter_flavorizr: ^2.3.0
+  #logo app:
+  flutter_launcher_icons: ^0.14.3
+flutter_native_splash:
+  background_image: assets/images/splash_screen.png # android ko đc xem ios đc ko
+  android_12:
+  #    color: "#FFFFFF"
+  #    image: assets/images/splash_screen.png
+  #    color: "#FFFFFF"
+  #    image: assets/images/bsh_splash.png
+  android: true
+  fullscreen: true
+  ios: true
+
+
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +74,13 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 flutter:
   uses-material-design: true
+  #image:
+  assets:
+    - assets/
+    - assets/icons/
+    - assets/images/
+    - assets/svg/
+    - lib/l10n/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
