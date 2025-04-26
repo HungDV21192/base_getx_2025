@@ -20,7 +20,6 @@ class SettingsScreen extends GetView<SettingsController> {
             RadioThemeWidget(
               initMode: controller.themeMode.value,
               onChanged: (theme) => controller.updateTheme(theme),
-              // => settingsCubit.updateTheme(theme),
             ),
             const Divider(height: 5, color: Colors.grey),
             RadioLangWidget(
@@ -28,7 +27,6 @@ class SettingsScreen extends GetView<SettingsController> {
               onChanged: (locale) {
                 context.setLocale(locale);
                 controller.updateLanguage(locale);
-                // settingsCubit.updateLanguage(locale);
               },
             ),
           ],
