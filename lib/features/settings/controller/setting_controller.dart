@@ -4,18 +4,19 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class SettingsController extends GetxController {
-
   var locale = const Locale('en', 'US').obs;
   var themeMode = ThemeMode.system.obs;
-@override
+
+  @override
   void onInit() {
-  loadFromStorage();
-  super.onInit();
+    loadFromStorage();
+    super.onInit();
   }
 
   Future<void> loadFromStorage() async {
     final getStg = GetStorage();
-    themeMode.value = _stringToThemeMode(getStg.read(LocalPrefsKey.THEME_MODE) ?? 'system');
+    themeMode.value =
+        _stringToThemeMode(getStg.read(LocalPrefsKey.THEME_MODE) ?? 'system');
     locale.value = _stringToLocale(getStg.read(LocalPrefsKey.LANGUAGE) ?? 'en');
   }
 
@@ -23,14 +24,17 @@ class SettingsController extends GetxController {
     final getStg = GetStorage();
     await getStg.write(LocalPrefsKey.THEME_MODE, _themeModeToString(mode));
     themeMode.value = mode;
+    update();
   }
 
   Future<void> updateLanguage(Locale lcl) async {
     final getStg = GetStorage();
     await getStg.write(LocalPrefsKey.LANGUAGE, lcl.languageCode);
     locale.value = lcl;
+    update();
   }
-static Locale _stringToLocale(String value) {
+
+  static Locale _stringToLocale(String value) {
     switch (value) {
       case 'en':
         return const Locale('en');
@@ -40,6 +44,7 @@ static Locale _stringToLocale(String value) {
         return const Locale('en');
     }
   }
+
   static ThemeMode _stringToThemeMode(String value) {
     switch (value) {
       case 'light':

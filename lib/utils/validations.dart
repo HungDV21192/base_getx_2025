@@ -1,11 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart';
 
 class Validations {
   static String? isValidAccount(String? account) {
     if ((account ?? '').isNotEmpty) {
       return null;
     } else {
-      return 'username_error'.tr();
+      return 'username_error'.tr;
     }
   }
 
@@ -13,7 +13,7 @@ class Validations {
     if ((password ?? '').isNotEmpty) {
       return null;
     } else {
-      return 'password_error'.tr();
+      return 'password_error'.tr;
     }
   }
 
@@ -21,7 +21,7 @@ class Validations {
     if ((confirmPW ?? '').isNotEmpty && (confirmPW == password)) {
       return null;
     } else {
-      return 'password_error'.tr();
+      return 'password_error'.tr;
     }
   }
 }

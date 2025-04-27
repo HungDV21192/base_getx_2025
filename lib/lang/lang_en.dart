@@ -1,4 +1,4 @@
-{
+const Map<String, String> en = {
   "register": "Register",
   "sign_in": "Sign In",
   "username": "Username",
@@ -29,4 +29,4 @@
   "remember_me": "Remember Me",
   "forgot_password": "Forgot Password?",
   "confirm_password": "Confirm Password"
-}
+};

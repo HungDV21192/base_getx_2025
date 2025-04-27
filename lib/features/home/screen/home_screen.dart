@@ -1,11 +1,8 @@
-import 'dart:io';
-
-import 'package:base_getx_2025/app/config/router_name.dart';
+import 'package:base_getx_2025/app/router/router_name.dart';
 import 'package:base_getx_2025/widgets/custom_screen.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,17 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => username = storedUsername);
   }
 
-  Future<void> _pickImage(ImageSource source) async {
-
-  }
+  Future<void> _pickImage(ImageSource source) async {}
 
   @override
   Widget build(BuildContext context) {
     return CustomScreen(
-      titleAppBar: '${'hello'.tr()} JaykinD',
+      titleAppBar: '${'hello'.tr} JaykinD',
       actions: [
         IconButton(
-          onPressed: () => context.push(RouterName.Settings),
+          onPressed: () => Get.toNamed(RouterName.SettingScreen),
           icon: const Icon(Icons.settings),
         ),
       ],
@@ -52,10 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
             CircleAvatar(
               radius: 50,
               backgroundImage:
-              imageUrl != null ? NetworkImage(imageUrl!) : null,
-              child: imageUrl == null
-                  ? const Icon(Icons.person, size: 50)
-                  : null,
+                  imageUrl != null ? NetworkImage(imageUrl!) : null,
+              child:
+                  imageUrl == null ? const Icon(Icons.person, size: 50) : null,
             ),
             const SizedBox(height: 20),
             Text("Username: $username"),

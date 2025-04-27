@@ -1,4 +1,4 @@
-{
+const Map<String, String> vi = {
   "register": "Đăng Ký",
   "sign_in": "Đăng Nhập",
   "username": "Tài khoản",
@@ -30,4 +30,4 @@
   "remember_me": "Nhớ tôi",
   "forgot_password": "Quên mật khẩu?",
   "confirm_password": "Xác nhận mật khẩu"
-}
+};

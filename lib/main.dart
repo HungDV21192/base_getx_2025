@@ -1,22 +1,22 @@
-import 'package:base_getx_2025/app/bindings/setting_binding.dart';
 import 'package:base_getx_2025/app/config/app_color.dart';
-import 'package:base_getx_2025/app/config/app_router.dart';
 import 'package:base_getx_2025/app/config/app_themes.dart';
-import 'package:base_getx_2025/features/settings/setting_controller.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:base_getx_2025/app/router/app_pages.dart';
+import 'package:base_getx_2025/features/settings/bindings/setting_binding.dart';
+import 'package:base_getx_2025/features/settings/controller/setting_controller.dart';
+import 'package:base_getx_2025/lang/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
   await GetStorage.init();
-  SettingsBinding.init();
   _configLoading();
   SystemChrome.setPreferredOrientations(
     [
@@ -24,44 +24,54 @@ void main() async {
       DeviceOrientation.portraitDown,
     ],
   );
-  runApp(   EasyLocalization(
-    supportedLocales: const [Locale('en'), Locale('vi')],
-    path: 'lib/l10n',
-    fallbackLocale: const Locale('vi'),
-    child: const MyApp(),
-  ),);
+  runApp(const MyApp());
 }
 
-class MyApp extends GetView<SettingsController> {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Obx((){
-      return MaterialApp.router(
-        key: ValueKey("${controller.locale.value.languageCode}_${controller.themeMode.value.name}"),
-        debugShowCheckedModeBanner: false,
-        theme: AppThemes.lightTheme,
-        darkTheme: AppThemes.darkTheme,
-        themeMode: controller.themeMode.value,
-        routerConfig: AppRouter.router,
-        locale: controller.locale.value,
-        supportedLocales: context.supportedLocales,
-        localizationsDelegates: context.localizationDelegates,
-        builder: EasyLoading.init(
-          builder: (context, child) {
-            return MediaQuery(
-              data: MediaQuery.of(context)
-                  .copyWith(textScaler: const TextScaler.linear(1.0)),
-              child: child!,
-            );
-          },
-        ),
-      );
-    });
+    return GetBuilder<SettingsController>(
+        init: SettingsController(),
+        builder: (ctr) {
+          return GetMaterialApp(
+            initialBinding: SettingsBinding(),
+            navigatorKey: navigatorKey,
+            title: 'Flutter Demo',
+            key: ValueKey(
+                "${ctr.locale.value.languageCode}_${ctr.themeMode.value.name}"),
+            debugShowCheckedModeBanner: false,
+            theme: AppThemes.lightTheme,
+            darkTheme: AppThemes.darkTheme,
+            themeMode: ctr.themeMode.value,
+            locale: ctr.locale.value,
+            supportedLocales: const <Locale>[
+              Locale('vi', 'VI'),
+              Locale('en', 'EN'),
+            ],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            fallbackLocale: ctr.locale.value,
+            translations: MyTranslations(),
+            getPages: AppPages.routes,
+            initialRoute: AppPages.initial,
+            builder: EasyLoading.init(
+              builder: (context, child) {
+                return MediaQuery(
+                  data: MediaQuery.of(context)
+                      .copyWith(textScaler: const TextScaler.linear(1.0)),
+                  child: child!,
+                );
+              },
+            ),
+          );
+        });
   }
 }
-
-
 
 void _configLoading() {
   EasyLoading.instance

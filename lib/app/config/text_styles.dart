@@ -1,22 +1,22 @@
-import 'package:base_getx_2025/main.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TextStyles {
   TextStyles._();
 
   static TextStyle get large {
-    return Theme.of(navigatorKey.currentContext!).textTheme.titleLarge!;
+    return Theme.of(Get.context!).textTheme.titleLarge!;
   }
 
   static TextStyle get medium {
-    return Theme.of(navigatorKey.currentContext!).textTheme.titleMedium!;
+    return Theme.of(Get.context!).textTheme.titleMedium!;
   }
 
   static TextStyle get mediumButton {
-    return Theme.of(navigatorKey.currentContext!).textTheme.titleMedium!;
+    return Theme.of(Get.context!).textTheme.titleMedium!;
   }
 
   static TextStyle get small {
-    return Theme.of(navigatorKey.currentContext!).textTheme.titleSmall!;
+    return Theme.of(Get.context!).textTheme.titleSmall!;
   }
 }
