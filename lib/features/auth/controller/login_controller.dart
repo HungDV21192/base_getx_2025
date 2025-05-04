@@ -11,8 +11,7 @@ class LoginController extends GetxController {
   final passwordFocus = FocusNode();
   var validButton = false.obs;
   final formKey = GlobalKey<FormState>();
-  var isSaveAccount = false;
-  var isChecked = true.obs;
+  var isChecked = false.obs;
   late final FlutterSecureStorage _storage;
 
   @override
@@ -30,17 +29,30 @@ class LoginController extends GetxController {
   }
 
   Future<void> _loadUserData() async {
-    final userName = await _storage.read(key: LocalStorageKey.USERNAME);
-    final password = await _storage.read(key: LocalStorageKey.PASSWORD);
-    isSaveAccount = (userName ?? '').isNotEmpty && (password ?? '').isNotEmpty;
+    final stgUsn = await _storage.read(key: StorageKey.USERNAME);
+    final stgPass = await _storage.read(key: StorageKey.PASSWORD);
+    usernameCtr.text = stgUsn ?? '';
+    passwordCtr.text = stgPass ?? '';
+    isChecked.value = (stgUsn ?? '').isNotEmpty && (stgPass ?? '').isNotEmpty;
+    validButton.value = (stgPass ?? '').isNotEmpty && (stgUsn ?? '').isNotEmpty;
+    print('check valud bi${validButton.value}');
   }
 
   void onValidButton() {
     validButton.value = formKey.currentState?.validate() ?? false;
   }
 
-  void login() {
-    Get.offNamed(RouterName.HomeScreen);
+  void login() async {
+    final username = usernameCtr.text.trim();
+    final password = passwordCtr.text.trim();
+    final usn = await _storage.read(key: StorageKey.USERNAME);
+    final pas = await _storage.read(key: (StorageKey.PASSWORD));
+
+    if (usn == username && pas == password) {
+      Get.offNamed(RouterName.HomeScreen);
+    } else {
+      Get.snackbar('Error', 'Invalid username or password');
+    }
   }
 
   @override

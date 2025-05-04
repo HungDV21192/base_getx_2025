@@ -16,20 +16,20 @@ class SettingsController extends GetxController {
   Future<void> loadFromStorage() async {
     final getStg = GetStorage();
     themeMode.value =
-        _stringToThemeMode(getStg.read(LocalPrefsKey.THEME_MODE) ?? 'system');
-    locale.value = _stringToLocale(getStg.read(LocalPrefsKey.LANGUAGE) ?? 'en');
+        _stringToThemeMode(getStg.read(PrefsKey.THEME_MODE) ?? 'system');
+    locale.value = _stringToLocale(getStg.read(PrefsKey.LANGUAGE) ?? 'en');
   }
 
   Future<void> updateTheme(ThemeMode mode) async {
     final getStg = GetStorage();
-    await getStg.write(LocalPrefsKey.THEME_MODE, _themeModeToString(mode));
+    await getStg.write(PrefsKey.THEME_MODE, _themeModeToString(mode));
     themeMode.value = mode;
     update();
   }
 
   Future<void> updateLanguage(Locale lcl) async {
     final getStg = GetStorage();
-    await getStg.write(LocalPrefsKey.LANGUAGE, lcl.languageCode);
+    await getStg.write(PrefsKey.LANGUAGE, lcl.languageCode);
     locale.value = lcl;
     update();
   }

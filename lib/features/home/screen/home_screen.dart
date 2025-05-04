@@ -1,82 +1,73 @@
 import 'package:base_getx_2025/app/router/router_name.dart';
+import 'package:base_getx_2025/features/home/controller/home_controller.dart';
+import 'package:base_getx_2025/features/home/widgets/BluePage.dart';
+import 'package:base_getx_2025/features/home/widgets/RedPage.dart';
 import 'package:base_getx_2025/widgets/custom_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  String? username;
-  String? imageUrl;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData();
-  }
-
-  Future<void> _loadUserData() async {
-    const storage = FlutterSecureStorage();
-    final storedUsername = await storage.read(key: 'username');
-    setState(() => username = storedUsername);
-  }
-
-  Future<void> _pickImage(ImageSource source) async {}
-
-  @override
   Widget build(BuildContext context) {
-    return CustomScreen(
-      titleAppBar: '${'hello'.tr} JaykinD',
-      actions: [
-        IconButton(
-          onPressed: () => Get.toNamed(RouterName.SettingScreen),
-          icon: const Icon(Icons.settings),
-        ),
-      ],
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage:
-                  imageUrl != null ? NetworkImage(imageUrl!) : null,
-              child:
-                  imageUrl == null ? const Icon(Icons.person, size: 50) : null,
-            ),
-            const SizedBox(height: 20),
-            Text("Username: $username"),
+    return DefaultTabController(
+      length: 2,
+      child: CustomScreen(
+        titleAppBar: '${'hello'.tr} JaykinD',
+        actions: [
+          IconButton(
+            onPressed: () => Get.toNamed(RouterName.SettingScreen),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
+        bottom: TabBar(
+          controller: controller.tabCtr,
+          onTap: (index) {
+            if (index == 0) {
+              Get.rootDelegate
+                  .toNamed('${RouterName.HomeScreen}${RouterName.RedPage}');
+            } else {
+              Get.rootDelegate
+                  .toNamed('${RouterName.HomeScreen}${RouterName.BluePage}');
+            }
+          },
+          tabs: const [
+            Tab(text: 'Tab 1'),
+            Tab(text: 'Tab 2'),
           ],
         ),
-      ),
-      floatButton: FloatingActionButton(
-        child: const Icon(Icons.add_a_photo),
-        onPressed: () async {
-          final source = await showDialog<ImageSource>(
-            context: context,
-            builder: (context) => SimpleDialog(
-              title: const Text("Chọn ảnh"),
-              children: [
-                SimpleDialogOption(
-                  onPressed: () => Navigator.pop(context, ImageSource.camera),
-                  child: const Text("Chụp ảnh"),
-                ),
-                SimpleDialogOption(
-                  onPressed: () => Navigator.pop(context, ImageSource.gallery),
-                  child: const Text("Chọn từ thư viện"),
-                ),
-              ],
-            ),
-          );
-          if (source != null) await _pickImage(source);
-        },
+        body: TabBarView(
+          controller: controller.tabCtr,
+          children: const [
+            RedPage(),
+            BluePage(),
+          ],
+        ),
+        floatButton: FloatingActionButton(
+          child: const Icon(Icons.add_a_photo),
+          onPressed: () async {
+            final source = await showDialog<ImageSource>(
+              context: context,
+              builder: (context) => SimpleDialog(
+                title: const Text("Chọn ảnh"),
+                children: [
+                  SimpleDialogOption(
+                    onPressed: () => Navigator.pop(context, ImageSource.camera),
+                    child: const Text("Chụp ảnh"),
+                  ),
+                  SimpleDialogOption(
+                    onPressed: () =>
+                        Navigator.pop(context, ImageSource.gallery),
+                    child: const Text("Chọn từ thư viện"),
+                  ),
+                ],
+              ),
+            );
+            // if (source != null) await _pickImage(source);
+          },
+        ),
       ),
     );
   }

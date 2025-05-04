@@ -9,13 +9,13 @@ class Endpoint {
   static const String REGISTER = 'api/Register';
 }
 
-class LocalStorageKey {
+class StorageKey {
   static const String ACCESS_TOKEN = 'LOGIN_MODEL';
   static const String USERNAME = 'USERNAME';
   static const String PASSWORD = 'PASSWORD';
 }
 
-class LocalPrefsKey {
+class PrefsKey {
   static const String THEME_MODE = 'THEME_MODE';
   static const String LANGUAGE = 'LANGUAGE';
   static const String AUTHEN_PASSWORD = 'LOGIN_MODEL_BHHK';

@@ -5,6 +5,8 @@ import 'package:base_getx_2025/features/auth/views/login_screen.dart';
 import 'package:base_getx_2025/features/auth/views/register_screen.dart';
 import 'package:base_getx_2025/features/home/bindings/home_binding.dart';
 import 'package:base_getx_2025/features/home/screen/home_screen.dart';
+import 'package:base_getx_2025/features/home/widgets/BluePage.dart';
+import 'package:base_getx_2025/features/home/widgets/RedPage.dart';
 import 'package:base_getx_2025/features/settings/views/settings_screen.dart';
 import 'package:base_getx_2025/features/splash_screen/screen/splash_screen.dart';
 import 'package:get/get.dart';
@@ -31,6 +33,16 @@ class AppPages {
       binding: HomeBinding(),
       name: RouterName.HomeScreen,
       page: () => const HomeScreen(),
+      children: [
+        GetPage(
+          name: RouterName.RedPage,
+          page: () => const RedPage(),
+        ),
+        GetPage(
+          name: RouterName.BluePage,
+          page: () => const BluePage(),
+        ),
+      ],
     ),
     GetPage(
       name: RouterName.SettingScreen,
