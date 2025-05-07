@@ -25,7 +25,7 @@ dependencies:
   flutter_native_splash: ^2.4.0
   #language
   #  easy_localization: ^3.0.7+1
-  flutter_localization: ^0.3.2
+  flutter_localization: ^0.3.0
   #router
   #  go_router: ^15.0.0
   #init

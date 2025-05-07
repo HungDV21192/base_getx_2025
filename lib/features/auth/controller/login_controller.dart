@@ -1,4 +1,6 @@
 import 'package:base_getx_2025/app/router/router_name.dart';
+import 'package:base_getx_2025/features/auth/repository/auth_repository.dart';
+import 'package:base_getx_2025/services/api_service.dart';
 import 'package:base_getx_2025/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -13,10 +15,12 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   var isChecked = false.obs;
   late final FlutterSecureStorage _storage;
-
+final apiSvc = ApiService();
+late AuthRepository authRepo ;
   @override
   void onInit() {
     _storage = const FlutterSecureStorage();
+    authRepo = AuthRepository( apiService: apiSvc);
     // StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
     //     .onConnectivityChanged
     //     .listen((List<ConnectivityResult> result) {

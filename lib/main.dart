@@ -11,9 +11,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-final navigatorKey = GlobalKey<NavigatorState>();
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
@@ -37,8 +34,7 @@ class MyApp extends StatelessWidget {
         builder: (ctr) {
           return GetMaterialApp(
             initialBinding: SettingsBinding(),
-            navigatorKey: navigatorKey,
-            title: 'Flutter Demo',
+            title: 'Base Getx 2025',
             key: ValueKey(
                 "${ctr.locale.value.languageCode}_${ctr.themeMode.value.name}"),
             debugShowCheckedModeBanner: false,

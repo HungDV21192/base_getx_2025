@@ -2,6 +2,7 @@ import 'package:base_getx_2025/utils/constant.dart';
 import 'package:base_getx_2025/utils/message.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiService {
   final Dio _dio;
@@ -9,12 +10,15 @@ class ApiService {
   ApiService._internal(this._dio);
 
   factory ApiService() {
+    const stg = FlutterSecureStorage();
+    final token = stg.read(key:StorageKey.ACCESS_TOKEN );
     final dio = Dio(BaseOptions(
       baseUrl: Base.URL,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
         'Accept': 'application/json',
       },
     ));

@@ -2,19 +2,18 @@ import 'package:base_getx_2025/services/api_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthRepository {
-  final FlutterSecureStorage storage;
+
   final ApiService apiService;
 
-  AuthRepository({required this.storage, required this.apiService});
+  AuthRepository({ required this.apiService});
 
   Future<bool> register(
       {required String username, required String password}) async {
-    // try {
-    // await apiService.get('path');
-    return true;
-    // } catch (err) {
-    //   return false;
-    // }
+    try {
+    await apiService.get('path');
+    } catch (err) {
+      return false;
+    }
   }
 
   Future<bool> login(
