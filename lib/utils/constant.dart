@@ -1,11 +1,11 @@
 class Base {
-  static const String URL = 'https://your.api.base.url';
+  static const String URL = 'https://api.lms-v2.slova.vn/api/';
   static const imagePath = 'assets/images';
   static const svgPath = 'assets/svg';
 }
 
 class Endpoint {
-  static const String LOGIN = 'api/SignIn';
+  static const String LOGIN = 'auth/login';
   static const String REGISTER = 'api/Register';
 }
 

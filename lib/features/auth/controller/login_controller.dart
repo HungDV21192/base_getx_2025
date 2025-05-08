@@ -15,12 +15,12 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   var isChecked = false.obs;
   late final FlutterSecureStorage _storage;
-final apiSvc = ApiService();
+  final ApiService _apiSvc = Get.find<ApiService>();
 late AuthRepository authRepo ;
   @override
   void onInit() {
     _storage = const FlutterSecureStorage();
-    authRepo = AuthRepository( apiService: apiSvc);
+    authRepo = AuthRepository( apiService: _apiSvc);
     // StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
     //     .onConnectivityChanged
     //     .listen((List<ConnectivityResult> result) {
@@ -52,8 +52,15 @@ late AuthRepository authRepo ;
     final usn = await _storage.read(key: StorageKey.USERNAME);
     final pas = await _storage.read(key: (StorageKey.PASSWORD));
 
-    if (usn == username && pas == password) {
-      Get.offNamed(RouterName.HomeScreen);
+    if ( username.isNotEmpty &&  password.isNotEmpty) {
+      final data = await authRepo.login(username: username, password: password);
+      if(data) {
+      await  _storage.write(key: StorageKey.USERNAME, value: username);
+      await  _storage.write(key: StorageKey.PASSWORD, value: password);
+        Get.offNamed(RouterName.HomeScreen);
+      }
+
+
     } else {
       Get.snackbar('Error', 'Invalid username or password');
     }
