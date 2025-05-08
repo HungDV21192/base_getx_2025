@@ -4,6 +4,7 @@ import 'package:base_getx_2025/app/router/app_pages.dart';
 import 'package:base_getx_2025/features/settings/bindings/setting_binding.dart';
 import 'package:base_getx_2025/features/settings/controller/setting_controller.dart';
 import 'package:base_getx_2025/lang/translations.dart';
+import 'package:base_getx_2025/services/network/api_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,11 +12,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-final navigatorKey = GlobalKey<NavigatorState>();
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ApiBinding().dependencies();
   await GetStorage.init();
   _configLoading();
   SystemChrome.setPreferredOrientations(
@@ -37,8 +36,7 @@ class MyApp extends StatelessWidget {
         builder: (ctr) {
           return GetMaterialApp(
             initialBinding: SettingsBinding(),
-            navigatorKey: navigatorKey,
-            title: 'Flutter Demo',
+            title: 'Base Getx 2025',
             key: ValueKey(
                 "${ctr.locale.value.languageCode}_${ctr.themeMode.value.name}"),
             debugShowCheckedModeBanner: false,

@@ -8,7 +8,7 @@ class BluePage extends StatelessWidget {
     return Container(
       width: 200,
       height: 200,
-      color: Colors.blue,
+      color: Colors.blue.withOpacity(0.3),
     );
   }
 }

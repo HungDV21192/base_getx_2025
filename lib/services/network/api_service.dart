@@ -2,26 +2,70 @@ import 'package:base_getx_2025/utils/constant.dart';
 import 'package:base_getx_2025/utils/message.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiService {
-  final Dio _dio;
+  late final Dio _dio;
 
-  ApiService._internal(this._dio);
+  ApiService._internal();
 
-  factory ApiService() {
+  static Future<ApiService> create() async {
+    final apiService = ApiService._internal();
     final dio = Dio(BaseOptions(
       baseUrl: Base.URL,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     ));
-    //Todo: Thêm interceptor nếu muốn logging
-    dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
-    return ApiService._internal(dio);
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        const storage = FlutterSecureStorage();
+        final token = await storage.read(key: StorageKey.ACCESS_TOKEN);
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
+        handler.next(options);
+      },
+    ));
+
+    dio.interceptors.add(LogInterceptor(
+      request: true,
+      requestBody: true,
+      responseBody: true,
+    ));
+
+    apiService._dio = dio;
+    return apiService;
   }
+
+  // factory ApiService()  {
+  //
+  //   final dio = Dio(BaseOptions(
+  //     baseUrl: Base.URL,
+  //     connectTimeout: const Duration(seconds: 10),
+  //     receiveTimeout: const Duration(seconds: 10),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     },
+  //   ));
+  //   dio.interceptors.add(InterceptorsWrapper(
+  //     onRequest: (options, handler) async {
+  //       const stg = FlutterSecureStorage();
+  //       final token  = await stg.read(key:StorageKey.ACCESS_TOKEN );
+  //       if (token != null) {
+  //         options.headers['Authorization'] = 'Bearer $token';
+  //       }
+  //       handler.next(options);
+  //     },
+  //   ));
+  //   //Todo: Thêm interceptor nếu muốn logging
+  //   dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true, request: true,),);
+  //   return ApiService._internal(dio);
+  // }
 
   Future<ApiResult<T>> get<T>(
     String path, {

@@ -9,7 +9,7 @@ class RedPage extends StatelessWidget {
     return Container(
       width: 200,
       height: 200,
-      color: Colors.red,
+      color: Colors.red.withOpacity(0.2),
     );
   }
 }
