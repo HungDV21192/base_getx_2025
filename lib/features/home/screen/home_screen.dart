@@ -55,7 +55,10 @@ class HomeScreen extends GetView<HomeController> {
               context: context,
               expand:  false,
               backgroundColor: Colors.transparent,
-              builder: (context) => BottomSheetCustom(),
+              builder: (context) =>  BottomSheetCustom(
+                onGallery: ()=> controller.onPickImage(ImageSource.gallery),
+                onTakePhoto: ()=> controller.onPickImage(ImageSource.camera),
+              ),
             );
             // Get.bottomSheet();
             // final source = await showDialog<ImageSource>(

@@ -1,14 +1,16 @@
 import 'package:base_getx_2025/app/router/router_name.dart';
+import 'package:base_getx_2025/services/upload_service.dart';
 import 'package:base_getx_2025/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
   late String username;
   late TabController tabCtr;
-
+final uploadSrv = UploadService();
   @override
   void dispose() {
     tabCtr.dispose();
@@ -34,6 +36,10 @@ class HomeController extends GetxController
     const storage = FlutterSecureStorage();
     final stgUsn = await storage.read(key: StorageKey.USERNAME);
     username = stgUsn ?? '';
+  }
+  void onPickImage(ImageSource source) async {
+    final data = await uploadSrv.pickImage(source: source);
+
   }
 
 // Future<void> _pickImage(ImageSource source) async {}

@@ -7,10 +7,14 @@ class UploadService {
   final ImagePicker _imagePicker = ImagePicker();
 
   Future<File?> pickImage({required ImageSource source}) async {
-    final XFile? pickedFile = await _imagePicker.pickImage(
-      source: source,
-    );
-    return pickedFile != null ? File(pickedFile.path) : null;
+   try {
+     final XFile? pickedFile = await _imagePicker.pickImage(
+       source: source,
+     );
+     return pickedFile != null ? File(pickedFile.path) : null;
+   } catch (e) {
+     return Future.error(e);
+   }
   }
   Future<File?> pickSingleFile({List<String>? allowedExtensions}) async {
     final result = await FilePicker.platform.pickFiles(
