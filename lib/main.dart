@@ -4,7 +4,7 @@ import 'package:base_getx_2025/app/router/app_pages.dart';
 import 'package:base_getx_2025/features/settings/bindings/setting_binding.dart';
 import 'package:base_getx_2025/features/settings/controller/setting_controller.dart';
 import 'package:base_getx_2025/lang/translations.dart';
-import 'package:base_getx_2025/services/api_binding.dart';
+import 'package:base_getx_2025/services/network/api_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

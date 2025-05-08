@@ -1,5 +1,5 @@
+import 'package:base_getx_2025/services/network/api_service.dart';
 import 'package:get/get.dart';
-import 'api_service.dart';
 
 class ApiBinding extends Bindings {
   @override

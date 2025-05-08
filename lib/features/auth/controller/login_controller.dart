@@ -1,6 +1,6 @@
 import 'package:base_getx_2025/app/router/router_name.dart';
 import 'package:base_getx_2025/features/auth/repository/auth_repository.dart';
-import 'package:base_getx_2025/services/api_service.dart';
+import 'package:base_getx_2025/services/network/api_service.dart';
 import 'package:base_getx_2025/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

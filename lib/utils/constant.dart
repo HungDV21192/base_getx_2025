@@ -7,6 +7,7 @@ class Base {
 class Endpoint {
   static const String LOGIN = 'auth/login';
   static const String REGISTER = 'api/Register';
+  static const String UPLOAD = 'upload/file';
 }
 
 class StorageKey {
