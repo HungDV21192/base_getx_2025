@@ -29,5 +29,7 @@ const Map<String, String> vi = {
   "have_account": "Bạn đã có tài khoản!",
   "remember_me": "Nhớ tôi",
   "forgot_password": "Quên mật khẩu?",
-  "confirm_password": "Xác nhận mật khẩu"
+  "confirm_password": "Xác nhận mật khẩu",
+  "no_internet": "Không có kết nối mạng",
+  "connection_timeout": "Kết nối thất bại, vui lòng thử lại sau!"
 };

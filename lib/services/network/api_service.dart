@@ -3,16 +3,17 @@ import 'package:base_getx_2025/utils/message.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 
 class ApiService {
   late final Dio _dio;
 
   ApiService._internal();
 
-  static Future<ApiService> create() async {
+  static Future<ApiService> create(String baseUrl) async {
     final apiService = ApiService._internal();
     final dio = Dio(BaseOptions(
-      baseUrl: Base.URL,
+      baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),
       headers: {
@@ -41,31 +42,9 @@ class ApiService {
     return apiService;
   }
 
-  // factory ApiService()  {
-  //
-  //   final dio = Dio(BaseOptions(
-  //     baseUrl: Base.URL,
-  //     connectTimeout: const Duration(seconds: 10),
-  //     receiveTimeout: const Duration(seconds: 10),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json'
-  //     },
-  //   ));
-  //   dio.interceptors.add(InterceptorsWrapper(
-  //     onRequest: (options, handler) async {
-  //       const stg = FlutterSecureStorage();
-  //       final token  = await stg.read(key:StorageKey.ACCESS_TOKEN );
-  //       if (token != null) {
-  //         options.headers['Authorization'] = 'Bearer $token';
-  //       }
-  //       handler.next(options);
-  //     },
-  //   ));
-  //   //Todo: Thêm interceptor nếu muốn logging
-  //   dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true, request: true,),);
-  //   return ApiService._internal(dio);
-  // }
+  void updateBaseUrl(String newBaseUrl) {
+    _dio.options.baseUrl = newBaseUrl;
+  }
 
   Future<ApiResult<T>> get<T>(
     String path, {
@@ -156,26 +135,22 @@ class ApiService {
     String message = 'Unknown error occurred';
     if (error is DioException) {
       if (error.type == DioExceptionType.connectionTimeout) {
-        FlushBarServices.showError('Kết nối thất bại, vui lòng thử lại sau!');
+        FlushBarServices.showError('connection_timeout'.tr);
       } else if (error.type == DioExceptionType.badResponse) {
         if (error.response?.data['code'] == '010') {
-          // NavigationService.navigateAndRemoveUntil(RouterName.LoginView);
+          //Todo: Hết hạn token.
+          // Get.offAllNamed(RouterName.LoginView);
           FlushBarServices.showError(error.response?.data['message']);
         } else {
           FlushBarServices.showError(error.response?.data['message']);
         }
       } else if (error.type == DioExceptionType.connectionError) {
         //Todo: Không có kết nối mạng.
+        FlushBarServices.showWarning('no_internet'.tr);
       } else {
         FlushBarServices.showError(error.toString());
         EasyLoading.dismiss();
       }
-      // if (error.response != null) {
-      //   message =
-      //       'Error ${error.response?.statusCode}: ${error.response?.statusMessage}';
-      // } else {
-      //   message = error.message ?? 'Connection failed';
-      // }
     }
     return ApiResult.failure(message);
   }

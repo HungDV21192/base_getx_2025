@@ -1,16 +1,15 @@
 import 'package:base_getx_2025/services/network/api_service.dart';
 import 'package:base_getx_2025/utils/constant.dart';
+import 'package:get/get.dart';
 
 class AuthRepository {
-
-  final ApiService apiService;
-
-  AuthRepository({ required this.apiService});
+    AuthRepository();
 
   Future<bool> register(
       {required String username, required String password}) async {
     try {
-    await apiService.get(Endpoint.REGISTER);
+      final ApiService _apiSvc = Get.find<ApiService>();
+    await _apiSvc.get(Endpoint.REGISTER);
     return true;
     } catch (err) {
       return false;
@@ -20,7 +19,8 @@ class AuthRepository {
   Future<bool> login(
       {required String username, required String password}) async {
     try {
-      await apiService.post(Endpoint.LOGIN, data: {
+      final ApiService _apiSvc = Get.find<ApiService>();
+      await _apiSvc.post(Endpoint.LOGIN, data: {
         'username': username,
         'password': password,
         'on': 'CLIENT',

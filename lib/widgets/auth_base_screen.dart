@@ -2,11 +2,11 @@ import 'package:base_getx_2025/utils/constant.dart';
 import 'package:flutter/material.dart';
 
 class AuthBaseScreen extends StatefulWidget {
-  const AuthBaseScreen({super.key, required this.body, this.indexScreen = 0});
+  const AuthBaseScreen({super.key, required this.body, this.indexScreen = 0,  this.floatACBT});
 
   final Widget body;
   final int indexScreen;
-
+final Widget? floatACBT;
   @override
   State<AuthBaseScreen> createState() => _AuthBaseScreenState();
 }
@@ -85,6 +85,7 @@ class _AuthBaseScreenState extends State<AuthBaseScreen>
           ],
         ),
       ),
+      floatingActionButton:widget.floatACBT ,
     );
   }
 }

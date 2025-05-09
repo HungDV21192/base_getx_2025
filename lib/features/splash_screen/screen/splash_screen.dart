@@ -33,7 +33,7 @@ class SplashScreen extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: InkWell(
-              onTap: () => Get.offNamed(RouterName.RegisterScreen),
+              onTap: () => Get.offNamed(RouterName.LoginSceen),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[

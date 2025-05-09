@@ -14,7 +14,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await ApiBinding().dependencies();
+  // await ApiBinding().dependencies();
   await GetStorage.init();
   _configLoading();
   SystemChrome.setPreferredOrientations(
