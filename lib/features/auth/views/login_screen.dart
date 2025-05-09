@@ -3,6 +3,7 @@ import 'package:base_getx_2025/app/config/text_styles.dart';
 import 'package:base_getx_2025/app/router/router_name.dart';
 import 'package:base_getx_2025/features/auth/controller/login_controller.dart';
 import 'package:base_getx_2025/features/auth/widgets/custom_richtext.dart';
+import 'package:base_getx_2025/utils/constant.dart';
 import 'package:base_getx_2025/utils/validations.dart';
 import 'package:base_getx_2025/widgets/auth_base_screen.dart';
 import 'package:base_getx_2025/widgets/custom_button.dart';
@@ -117,6 +118,14 @@ class LoginScreen extends GetView<LoginController> {
             ),
           ),
         ],
+      ),
+      floatACBT: InkWell(
+        onLongPress: () => controller.envController.toggleEnvironment(),
+        child: Image.asset(
+          ImageAssets.lg_cpn,
+          width: 50,
+          height: 50,
+        ),
       ),
     );
   }

@@ -28,5 +28,7 @@ const Map<String, String> en = {
   "have_account": "Already have an Account! ?",
   "remember_me": "Remember Me",
   "forgot_password": "Forgot Password?",
-  "confirm_password": "Confirm Password"
+  "confirm_password": "Confirm Password",
+  "no_internet": "No internet",
+  "connection_timeout": "Connection timeout!"
 };

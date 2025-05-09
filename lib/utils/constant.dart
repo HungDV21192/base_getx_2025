@@ -1,5 +1,6 @@
 class Base {
-  static const String URL = 'https://api.lms-v2.slova.vn/api/';
+  static const String URL_PROD = 'https://api.lms-v2.slova.vn/api/PROD';
+  static const String URL_DEV = 'https://api.lms-v2.slova.vn/api/DEV';
   static const imagePath = 'assets/images';
   static const svgPath = 'assets/svg';
 }
@@ -24,6 +25,7 @@ class PrefsKey {
 
 class ImageAssets {
   static const String splash_screen = '${Base.imagePath}/splash_screen.png';
+  static const String lg_cpn = '${Base.imagePath}/lg_cpn.png';
   static const String image_background =
       '${Base.imagePath}/image_background.png';
 }

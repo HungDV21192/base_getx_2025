@@ -1,7 +1,11 @@
+import 'dart:async';
+
+import 'package:base_getx_2025/app/env/env_controller.dart';
 import 'package:base_getx_2025/app/router/router_name.dart';
 import 'package:base_getx_2025/features/auth/repository/auth_repository.dart';
-import 'package:base_getx_2025/services/network/api_service.dart';
 import 'package:base_getx_2025/utils/constant.dart';
+import 'package:base_getx_2025/utils/message.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -15,20 +19,28 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   var isChecked = false.obs;
   late final FlutterSecureStorage _storage;
-  final ApiService _apiSvc = Get.find<ApiService>();
-late AuthRepository authRepo ;
+  final envController = Get.find<EnvController>();
+  late AuthRepository authRepo;
+  var versionApp = '';
+
   @override
   void onInit() {
+    StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
+      if (result.contains(ConnectivityResult.none)) {
+        FlushBarServices.showWarning('no_internet'.tr);
+      }
+    });
     _storage = const FlutterSecureStorage();
-    authRepo = AuthRepository( apiService: _apiSvc);
-    // StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
-    //     .onConnectivityChanged
-    //     .listen((List<ConnectivityResult> result) {
-    //   if (result.contains(ConnectivityResult.none)) {
-    //     FlushBarServices.showWarning('Không có kết nối mạng');
-    //   }
-    // });
+    authRepo = AuthRepository();
     _loadUserData();
+    //Todo: Note
+    // Chỉ gọi trong hàm dưới đây đối với những thành phần phụ thuộc vào context,
+    // hàm có nghĩa sẽ khởi tạo khi context đã được khởi tạo.
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //});
+
     super.onInit();
   }
 
@@ -52,15 +64,13 @@ late AuthRepository authRepo ;
     final usn = await _storage.read(key: StorageKey.USERNAME);
     final pas = await _storage.read(key: (StorageKey.PASSWORD));
 
-    if ( username.isNotEmpty &&  password.isNotEmpty) {
+    if (username.isNotEmpty && password.isNotEmpty) {
       final data = await authRepo.login(username: username, password: password);
-      if(data) {
-      await  _storage.write(key: StorageKey.USERNAME, value: username);
-      await  _storage.write(key: StorageKey.PASSWORD, value: password);
+      if (data) {
+        await _storage.write(key: StorageKey.USERNAME, value: username);
+        await _storage.write(key: StorageKey.PASSWORD, value: password);
         Get.offNamed(RouterName.HomeScreen);
       }
-
-
     } else {
       Get.snackbar('Error', 'Invalid username or password');
     }
